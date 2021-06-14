@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bilibili.teddyxlandlee.microlib.mixin",
+  "mixins": [
+    "MixinAdvancementTask",
+    "api.AdvancementTaskAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
