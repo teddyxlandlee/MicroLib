@@ -1,4 +1,4 @@
-package bilibili.teddyxlandlee.microlib.api.predicate;
+package bilibili.teddyxlandlee.microlib.predicate;
 
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.item.Item;

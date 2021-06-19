@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package bilibili.teddyxlandlee.microlib.api.blockentity;
+package bilibili.teddyxlandlee.microlib.blockentity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;

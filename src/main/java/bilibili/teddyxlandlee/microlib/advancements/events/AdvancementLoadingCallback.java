@@ -1,7 +1,7 @@
-package bilibili.teddyxlandlee.microlib.api.advancements.events;
+package bilibili.teddyxlandlee.microlib.advancements.events;
 
-import bilibili.teddyxlandlee.microlib.api.SimpleEvent;
-import bilibili.teddyxlandlee.microlib.mixin.api.AdvancementTaskAccessor;
+import bilibili.teddyxlandlee.microlib.SimpleEvent;
+import bilibili.teddyxlandlee.microlib.hooks.AdvancementTaskHooks;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.util.Identifier;
@@ -16,7 +16,7 @@ import net.minecraft.util.Identifier;
  */
 @FunctionalInterface
 public interface AdvancementLoadingCallback {
-    void onLoadAdvancement(Identifier id, JsonObject json, Advancement.Task task, AdvancementTaskAccessor taskAccessor);
+    void onLoadAdvancement(Identifier id, JsonObject json, Advancement.Task task, AdvancementTaskHooks taskAccessor);
 
     /**
      * <p>The original event. Here's an example about how to

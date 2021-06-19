@@ -1,7 +1,7 @@
-package bilibili.teddyxlandlee.microlib.mixin;
+package io.github.teddyxlandlee.mcmod.microlib.mixin;
 
-import bilibili.teddyxlandlee.microlib.api.advancements.events.AdvancementLoadingCallback;
-import bilibili.teddyxlandlee.microlib.mixin.api.AdvancementTaskAccessor;
+import bilibili.teddyxlandlee.microlib.advancements.events.AdvancementLoadingCallback;
+import bilibili.teddyxlandlee.microlib.hooks.AdvancementTaskHooks;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
@@ -20,7 +20,7 @@ abstract class MixinAdvancementTask {
     private static void applyLoadingEvents(JsonObject obj, AdvancementEntityPredicateDeserializer predicateDeserializer, CallbackInfoReturnable<Advancement.Task> cir) {
         final Identifier id = predicateDeserializer.getAdvancementId();
         Advancement.Task task = cir.getReturnValue();
-        AdvancementTaskAccessor acc = (AdvancementTaskAccessor) task;
+        AdvancementTaskHooks acc = (AdvancementTaskHooks) task;
         AdvancementLoadingCallback.EVENT.forEach(cb -> cb.onLoadAdvancement(id, obj, task, acc));
     }
 }

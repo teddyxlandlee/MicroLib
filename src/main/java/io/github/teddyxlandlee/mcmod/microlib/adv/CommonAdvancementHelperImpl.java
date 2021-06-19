@@ -1,8 +1,8 @@
-package bilibili.teddyxlandlee.microlib.impl.advancements;
+package io.github.teddyxlandlee.mcmod.microlib.adv;
 
-import bilibili.teddyxlandlee.microlib.api.advancements.CommonAdvancementHelper;
-import bilibili.teddyxlandlee.microlib.api.advancements.events.AdvancementLoadingCallback;
-import bilibili.teddyxlandlee.microlib.api.predicate.SimpleItemPredicates;
+import bilibili.teddyxlandlee.microlib.advancements.CommonAdvancementHelper;
+import bilibili.teddyxlandlee.microlib.advancements.events.AdvancementLoadingCallback;
+import bilibili.teddyxlandlee.microlib.predicate.SimpleItemPredicates;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.CriterionConditions;

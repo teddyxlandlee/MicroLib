@@ -1,4 +1,4 @@
-package bilibili.teddyxlandlee.microlib.api;
+package bilibili.teddyxlandlee.microlib;
 
 import com.google.common.collect.Lists;
 

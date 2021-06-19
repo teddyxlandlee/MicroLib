@@ -1,0 +1,12 @@
+{
+  "package": "bilibili.teddyxlandlee.microlib.hooks",
+  "required": true,
+  "minVersion": "0.8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+
+  "mixins": [
+    "AdvancementTaskHooks"
+  ]
+}

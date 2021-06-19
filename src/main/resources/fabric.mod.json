@@ -17,11 +17,12 @@
   "environment": "*",
 
   "mixins": [
-    "microlib.mixins.json"
+    "microlib.api.mixins.json",
+    "microlib.impl.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.9.0",
-    "minecraft": ">=1.16.2 <1.17",
+    "minecraft": ">=1.16.2 <1.17"
   }
 }

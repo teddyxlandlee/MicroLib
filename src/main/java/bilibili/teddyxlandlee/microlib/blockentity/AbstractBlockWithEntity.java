@@ -1,4 +1,4 @@
-package bilibili.teddyxlandlee.microlib.api.blockentity;
+package bilibili.teddyxlandlee.microlib.blockentity;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockRenderType;

@@ -1,6 +1,6 @@
-package bilibili.teddyxlandlee.microlib.api.advancements;
+package bilibili.teddyxlandlee.microlib.advancements;
 
-import bilibili.teddyxlandlee.microlib.impl.advancements.CommonAdvancementHelperImpl;
+import io.github.teddyxlandlee.mcmod.microlib.adv.CommonAdvancementHelperImpl;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.CriterionConditions;
 import net.minecraft.item.Item;

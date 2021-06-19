@@ -1,4 +1,4 @@
-package bilibili.teddyxlandlee.microlib.api;
+package bilibili.teddyxlandlee.microlib;
 
 import static java.util.Objects.requireNonNull;
 
