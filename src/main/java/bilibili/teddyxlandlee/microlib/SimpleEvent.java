@@ -1,12 +1,14 @@
 package bilibili.teddyxlandlee.microlib;
 
 import bilibili.teddyxlandlee.microlib.util.collections.AddOnlyArrayList;
+import org.apiguardian.api.API;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Consumer;
 
+@API(status = API.Status.STABLE)
 public class SimpleEvent<T> implements Iterable<T> {
     //private final List<T> container = Lists.newArrayList();
     private final List<T> container = new AddOnlyArrayList<>();
@@ -28,6 +30,8 @@ public class SimpleEvent<T> implements Iterable<T> {
     @NotNull
     @Override
     public ListIterator<T> iterator() {
-        return container.listIterator();
+        synchronized (container) {
+            return container.listIterator();
+        }
     }
 }
