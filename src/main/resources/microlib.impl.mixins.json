@@ -5,8 +5,9 @@
   "injectors": {
     "defaultRequire": 1
   },
-
   "mixins": [
-    "MixinAdvancementTask"
+    "MixinAdvancementTask",
+    "MixinTagGroupLoader",
+    "TagBuilderEntryMixin"
   ]
 }

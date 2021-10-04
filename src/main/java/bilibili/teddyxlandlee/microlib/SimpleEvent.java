@@ -1,12 +1,15 @@
 package bilibili.teddyxlandlee.microlib;
 
-import com.google.common.collect.Lists;
+import bilibili.teddyxlandlee.microlib.util.collections.AddOnlyArrayList;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.function.Consumer;
 
-public class SimpleEvent<T> {
-    private final LinkedList<T> container = Lists.newLinkedList();
+public class SimpleEvent<T> implements Iterable<T> {
+    //private final List<T> container = Lists.newArrayList();
+    private final List<T> container = new AddOnlyArrayList<>();
 
     public static <T> SimpleEvent<T> of() { return new SimpleEvent<>(); }
 
@@ -20,5 +23,11 @@ public class SimpleEvent<T> {
         synchronized (container) {
             container.forEach(c);
         }
+    }
+
+    @NotNull
+    @Override
+    public ListIterator<T> iterator() {
+        return container.listIterator();
     }
 }

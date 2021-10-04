@@ -20,10 +20,13 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.apiguardian.api.API;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+@API(status = API.Status.STABLE)
+@SuppressWarnings("unused")
 public abstract class AbstractBlockWithEntity extends BlockWithEntity {
     protected abstract boolean blockEntityPredicate(BlockEntity blockEntity);
 
@@ -35,7 +38,7 @@ public abstract class AbstractBlockWithEntity extends BlockWithEntity {
         return ImmutableList.of();
     }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -68,7 +71,7 @@ public abstract class AbstractBlockWithEntity extends BlockWithEntity {
         return BlockRenderType.MODEL;
     }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -80,12 +83,12 @@ public abstract class AbstractBlockWithEntity extends BlockWithEntity {
         super.onStateReplaced(state, world, pos, newState, moved);
     }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public boolean hasComparatorOutput(BlockState state) {
         return true;
     }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
     }

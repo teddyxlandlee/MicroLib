@@ -1,10 +1,12 @@
 package bilibili.teddyxlandlee.microlib.advancements.events;
 
 import bilibili.teddyxlandlee.microlib.SimpleEvent;
+import bilibili.teddyxlandlee.microlib.advancements.CommonAdvancementHelper;
 import bilibili.teddyxlandlee.microlib.hooks.AdvancementTaskHooks;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.util.Identifier;
+import org.apiguardian.api.API;
 
 /**
  * <p>Of course we can create advancements by writing JSONs.
@@ -13,8 +15,11 @@ import net.minecraft.util.Identifier;
  * idea.</p><p>This callback enables us to modify them by
  * using event system. This can prove the cross-mod
  * advancement modification compatibility.</p>
+ *
+ * @see CommonAdvancementHelper
  */
 @FunctionalInterface
+@API(status = API.Status.STABLE)
 public interface AdvancementLoadingCallback {
     void onLoadAdvancement(Identifier id, JsonObject json, Advancement.Task task, AdvancementTaskHooks taskAccessor);
 

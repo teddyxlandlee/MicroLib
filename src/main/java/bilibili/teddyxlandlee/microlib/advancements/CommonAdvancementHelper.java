@@ -1,25 +1,40 @@
 package bilibili.teddyxlandlee.microlib.advancements;
 
-import io.github.teddyxlandlee.mcmod.microlib.adv.CommonAdvancementHelperImpl;
-import net.minecraft.advancement.criterion.ConsumeItemCriterion;
-import net.minecraft.advancement.criterion.CriterionConditions;
+import io.github.teddyxlandlee.mcmod.microlib.adv.AndsInsertion;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
+import org.apiguardian.api.API;
 
 import java.util.Set;
 
-// TODO finish javadoc
-public interface CommonAdvancementHelper<E extends CriterionConditions> {
-    CommonAdvancementHelper<ConsumeItemCriterion.Conditions> BALANCED_DIET = CommonAdvancementHelperImpl.BALANCED_DIET;
+/**
+ * <p>This is a helper for common advancements insertions. With
+ * this, you can simply register your item or item set</p>
+ */
+@API(status = API.Status.EXPERIMENTAL)
+public interface CommonAdvancementHelper<I> {
+    CommonAdvancementHelper<Item> BALANCED_DIET = AndsInsertion.BALANCED_DIET;
 
-    void registerOne(Identifier id, Item item);
+    void registerOne(String id, I item);
 
-    void registerEach(Identifier id, Item... items);
-    void registerEach(Identifier id, Set<Item> items);
-    void registerEach(Identifier id, Tag<Item> items);
+    default void registerOne(Identifier id, I item) {
+        registerOne(id.toString(), item);
+    }
 
-    void registerTag(Identifier id, Item... items);
-    void registerTag(Identifier id, Set<Item> items);
-    void registerTag(Identifier id, Tag<Item> items);
+    default void registerEach(Identifier id, I... items) {
+        for (I i : items)
+            registerOne(id + "^mul$$" + idFromItem(i), i);
+    }
+
+    default void registerEach(Identifier id, Set<I> items) {
+        for (I i : items)
+            registerOne(id + "^mul$$" + idFromItem(i), i);
+    }
+
+    void registerTag(Identifier id, Tag<I> items);
+
+
+    Identifier idFromItem(I item);
+
 }

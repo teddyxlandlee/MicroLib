@@ -12,7 +12,6 @@
     "YWsuoyi"
   ],
   "license": "MIT",
-  "icon": "assets/microlib/icon.png",
 
   "environment": "*",
 
