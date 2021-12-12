@@ -1,10 +1,10 @@
 plugins {
-	id 'fabric-loom' version '0.8-SNAPSHOT'
+	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -29,7 +29,6 @@ allprojects{
 		//include modImplementation("net.fabricmc:fabric-api:fabric-api-base:${project.fabric_api_base_version}")
 		//modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-		modCompileOnly 'org.featurehouse.asm:asm-comparator-api:0.1.2'
 		compileOnly 'org.apiguardian:apiguardian-api:1.1.2'
 		// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 		// You may need to force-disable transitiveness on them.
