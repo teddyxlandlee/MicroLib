@@ -1,7 +1,6 @@
 package bilibili.teddyxlandlee.microlib.tag;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import io.github.teddyxlandlee.mcmod.microlib.tag.TagInsertionsImpl;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
@@ -15,6 +14,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+@SuppressWarnings({"unused"})
 public interface TagInsertion<E> {
     TagInsertion<Block> BLOCK = TagInsertionsImpl.BLOCK;
     TagInsertion<Fluid> FLUID = TagInsertionsImpl.FLUIDS;

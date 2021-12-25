@@ -4,6 +4,8 @@ import io.github.teddyxlandlee.mcmod.microlib.adv.AndsInsertion;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
 import org.apiguardian.api.API;
 
 import java.util.Set;
@@ -15,6 +17,7 @@ import java.util.Set;
 @API(status = API.Status.EXPERIMENTAL)
 public interface CommonAdvancementHelper<I> {
     CommonAdvancementHelper<Item> BALANCED_DIET = AndsInsertion.BALANCED_DIET;
+    CommonAdvancementHelper<RegistryKey<Biome>> ADVENTURING_TIME = AndsInsertion.ADVENTURING_TIME;
 
     void registerOne(String id, I item);
 

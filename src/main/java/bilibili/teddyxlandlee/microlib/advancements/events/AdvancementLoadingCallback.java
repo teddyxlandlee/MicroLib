@@ -36,7 +36,7 @@ public interface AdvancementLoadingCallback {
      *
      *     requirementsNew[0] = task.criterion(
      *          "my_mod:husbandry$plant_seed$$my_mod_block",
-     *          new new PlacedBlockCriterion.Conditions(
+     *          new PlacedBlockCriterion.Conditions(
      *             EntityPredicate.Extended.EMPTY,
      *             MyMod.MY_MOD_BLOCK,
      *             StatePredicate.ANY,

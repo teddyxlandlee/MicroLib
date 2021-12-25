@@ -6,19 +6,25 @@ import bilibili.teddyxlandlee.microlib.predicate.SimpleItemPredicates;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.CriterionConditions;
+import net.minecraft.advancement.criterion.LocationArrivalCriterion;
 import net.minecraft.item.Item;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LocationPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.Function;
 
 public class AndsInsertion<I, P> implements CommonAdvancementHelper<I> {
     public static final AndsInsertion<Item, ItemPredicate> BALANCED_DIET;
+    public static final AndsInsertion<RegistryKey<Biome>, LocationPredicate> ADVENTURING_TIME;
 
 
     /** @see it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap#put(Object, Object)  */
@@ -26,13 +32,13 @@ public class AndsInsertion<I, P> implements CommonAdvancementHelper<I> {
 
     //private final Function<P, CriterionConditions> predicate2conditions;
     private final Function<I, P> single2predicate;
-    private final Function<Tag<I>, P> tag2predicate;
+    @Nullable private final Function<Tag<I>, P> tag2predicate;
     private final Function<I, Identifier> item2id;
 
     AndsInsertion(@NotNull Identifier targetAdv,
                   Function<P, CriterionConditions> predicate2conditions,
                   Function<I, P> single2predicate,
-                  Function<Tag<I>, P> tag2predicate,
+                  @Nullable Function<Tag<I>, P> tag2predicate,
                   Function<I, Identifier> item2id) {
         //this.predicate2conditions = predicate2conditions;
         this.single2predicate = single2predicate;
@@ -63,7 +69,9 @@ public class AndsInsertion<I, P> implements CommonAdvancementHelper<I> {
 
     @Override
     public void registerTag(Identifier id, Tag<I> items) {
-        predicateMap.put("tag@" + id.toString(), tag2predicate.apply(items));
+        if (tag2predicate != null) {
+            predicateMap.put("tag@" + id.toString(), tag2predicate.apply(items));
+        } else throw new UnsupportedOperationException("Registering tags is currently not supported");
     }
 
     @Override
@@ -77,6 +85,13 @@ public class AndsInsertion<I, P> implements CommonAdvancementHelper<I> {
                 itemPredicate -> new ConsumeItemCriterion.Conditions(EntityPredicate.Extended.EMPTY, itemPredicate),
                 SimpleItemPredicates::of, SimpleItemPredicates::of,
                 Registry.ITEM::getId
+        );
+        ADVENTURING_TIME = new AndsInsertion<>(
+                new Identifier("adventure/adventuring_time"),
+                locationPredicate -> new LocationArrivalCriterion.Conditions(
+                        new Identifier("location"), EntityPredicate.Extended.EMPTY, locationPredicate),
+                LocationPredicate::biome, null,
+                RegistryKey::getValue
         );
     }
 }

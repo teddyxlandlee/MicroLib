@@ -19,9 +19,7 @@ import java.util.Map;
 public class MixinTagGroupLoader {
     @Shadow @Final private String dataType;
 
-    // method_18243: async
-    @SuppressWarnings("all")
-    @Inject(method = "method_18243(Lnet/minecraft/resource/ResourceManager;)Ljava/util/Map;", at = @At("RETURN"))
+    @Inject(method = "loadTags", at = @At("RETURN"))
     private void insertInsertions(ResourceManager rm, CallbackInfoReturnable<Map<Identifier, Tag.Builder>> cir) {
         Map<Identifier, Tag.Builder> m = cir.getReturnValue();  // HashMap
         for (TagInsertion.TagModification event : TagInsertionsImpl.fromDataType(dataType).getEvents()) {

@@ -5,6 +5,8 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,18 +29,25 @@ import java.util.List;
 
 @API(status = API.Status.STABLE)
 @SuppressWarnings("unused")
-public abstract class AbstractBlockWithEntity extends BlockWithEntity {
+public abstract class AbstractBlockWithEntity<E extends BlockEntity & TickableBlockEntity> extends BlockWithEntity {
     protected abstract boolean blockEntityPredicate(BlockEntity blockEntity);
 
     protected AbstractBlockWithEntity(Settings settings) {
         super(settings);
     }
 
-    public List<Identifier> incrementWhileOnUse(BlockState state, World world, BlockPos pos, ServerPlayerEntity serverPlayerEntity, Hand hand, BlockHitResult blockHitResult) {
+    /**
+     * The stats that should increment while opening the block entity screen.
+     * @return List of stats, can be immutable.
+     */
+    public List<Identifier> incrementWhileOnUse(BlockState state, World world, BlockPos pos,
+                                                ServerPlayerEntity serverPlayerEntity,
+                                                Hand hand, BlockHitResult blockHitResult) {
         return ImmutableList.of();
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation")
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -71,7 +80,10 @@ public abstract class AbstractBlockWithEntity extends BlockWithEntity {
         return BlockRenderType.MODEL;
     }
 
-    @Override @SuppressWarnings("deprecation")
+    public abstract BlockEntityType<E> getBlockEntityType();
+
+    @SuppressWarnings("deprecation")
+    @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -83,12 +95,25 @@ public abstract class AbstractBlockWithEntity extends BlockWithEntity {
         super.onStateReplaced(state, world, pos, newState, moved);
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override
+    public abstract E createBlockEntity(BlockPos pos, BlockState state);
+
+    //public abstract Optional<ITickable> getTickableBlockEntity(World world, BlockState state);
+    public BlockEntityTicker<E> ticker() {
+        return TickableBlockEntity::tick;
+    }
+
+    @SuppressWarnings("deprecation")
     public boolean hasComparatorOutput(BlockState state) {
         return true;
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient ? null : checkType(type, getBlockEntityType(), ticker());
+    }
+
+    @SuppressWarnings("deprecation")
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
     }
