@@ -1,9 +1,7 @@
 package io.github.teddyxlandlee.mcmod.microlib.adv;
 
-import bilibili.teddyxlandlee.microlib.advancements.CommonAdvancementHelper;
 import bilibili.teddyxlandlee.microlib.advancements.events.AdvancementLoadingCallback;
 import bilibili.teddyxlandlee.microlib.predicate.SimpleItemPredicates;
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
 import net.minecraft.advancement.criterion.CriterionConditions;
 import net.minecraft.advancement.criterion.LocationArrivalCriterion;
@@ -22,28 +20,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.function.Function;
 
-public class AndsInsertion<I, P> implements CommonAdvancementHelper<I> {
+public class AndsInsertion<I, P> extends AbstractAdvancementHelper<I, P> {
     public static final AndsInsertion<Item, ItemPredicate> BALANCED_DIET;
     public static final AndsInsertion<RegistryKey<Biome>, LocationPredicate> ADVENTURING_TIME;
-
-
-    /** @see it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap#put(Object, Object)  */
-    private final Map<String, P> predicateMap = new Object2ObjectArrayMap<>();
-
-    //private final Function<P, CriterionConditions> predicate2conditions;
-    private final Function<I, P> single2predicate;
-    @Nullable private final Function<Tag<I>, P> tag2predicate;
-    private final Function<I, Identifier> item2id;
 
     AndsInsertion(@NotNull Identifier targetAdv,
                   Function<P, CriterionConditions> predicate2conditions,
                   Function<I, P> single2predicate,
                   @Nullable Function<Tag<I>, P> tag2predicate,
                   Function<I, Identifier> item2id) {
-        //this.predicate2conditions = predicate2conditions;
-        this.single2predicate = single2predicate;
-        this.tag2predicate = tag2predicate;
-        this.item2id = item2id;
+        super(single2predicate, tag2predicate, item2id);
 
         AdvancementLoadingCallback.EVENT.register((id, json, task, acc) -> {
             if (!id.equals(targetAdv)) return;
@@ -60,23 +46,6 @@ public class AndsInsertion<I, P> implements CommonAdvancementHelper<I> {
                 newReq[i++] = new String[] { reqId };
             } acc.setRequirements(newReq);
         });
-    }
-
-    @Override
-    public void registerOne(String id, I item) {
-        predicateMap.put('@' + id, single2predicate.apply(item));
-    }
-
-    @Override
-    public void registerTag(Identifier id, Tag<I> items) {
-        if (tag2predicate != null) {
-            predicateMap.put("tag@" + id.toString(), tag2predicate.apply(items));
-        } else throw new UnsupportedOperationException("Registering tags is currently not supported");
-    }
-
-    @Override
-    public Identifier idFromItem(I item) {
-        return item2id.apply(item);
     }
 
     static {
